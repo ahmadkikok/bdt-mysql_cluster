@@ -1,13 +1,13 @@
 # Implementation MySQL Cluster with Proxy Load Balancer
 Mengimplementasikan MySQL Cluster dengan Proxy Load Balancer, sebelum mengimplementasikan, ada beberapa hal yang harus diperhatikan :
 
-## Kebutuhan
+## 1. Kebutuhan
 - Vagrant
 - Bento/ubuntu18.04
 - MySQL Data Sample
 - MySQL Remote Software (Pada kasus ini saya menggunakan SQLYog)
 
-## Model Arsitektur
+## 2. Model Arsitektur
 Pada desain MySQL Cluster kali ini, saya menggunakan 4 Cluster, dengan informasi tiap clusternya:
 
 | No | IP Address | Hostname | Deskripsi |
@@ -17,12 +17,12 @@ Pada desain MySQL Cluster kali ini, saya menggunakan 4 Cluster, dengan informasi
 | 3 | 192.168.33.13 | clusterdb3 | Sebagai Server 2 dan Node 2 |
 | 4 | 192.168.33.14 | clusterdb4 | Sebagai Load Balancer (ProxySQL) |
 
-## Instalasi
+## 3. Instalasi
 1.  ``git clone `` https://github.com/ahmadkikok/bdt-mysql_cluster.git
 2. Hapus folder ``.vagrant`` untuk menghapus konfigurasi VB sebelumnya.
 3. Lakukan ``vagrant up`` dan lakukan ``vagrant ssh`` ditiap clusternya.
 
-### Provisioning Clusterdb-1
+### 3.1 Provisioning Clusterdb-1
 ```
 # Update repositories
 sudo apt-get update
@@ -108,7 +108,7 @@ hostname=192.168.33.13 # In our case the MySQL server/client is on the same Drop
 
 Konfigurasi MySQL Server API berada, saya menggunakan 2 Server API yang bersamaan dengan lokasi Data Node.
 
-### Provisioning Clusterdb-2 dan Clusterdb-3
+### 3.2 Provisioning Clusterdb-2 dan Clusterdb-3
 ```
 # Update repositories
 sudo apt-get update
@@ -223,4 +223,32 @@ ndb-connectstring=192.168.33.11  # location of management server
 
 Yaitu lokasi service MySQL Server API yang berjalan pada ``192.168.33.12`` serta MySQL Cluster yang berjalan pada ``192.168.33.11``
 
-4. Lakukan poin 3 pada ``clusterdb3``, perbedaan hanya pada konfigurasi alamat address.
+### 3.2 Provisioning Clusterdb-4
+```
+
+```
+
+4. Lakukan poin 3.2 pada ``clusterdb3``, perbedaan hanya pada konfigurasi alamat address.
+5. Jalankan script pada ``clusterdb2`` atau ``clusterdb3``
+```
+sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
+```
+
+6. Jalankan script pada ``clusterdb4``
+```
+# Melakukan Import Proxy_Config.SQL
+sudo mysql -u admin -p -h 127.0.0.1 -P 6032 --prompt='ProxySQLAdmin> ' < /vagrant/mysql-dump/proxy_config.sql
+
+# Mengunduh addition_to_sys.sql
+curl -OL https://gist.github.com/lefred/77ddbde301c72535381ae7af9f968322/raw/5e40b03333a3c148b78aa348fd2cd5b5dbb36e4d/addition_to_sys.sql
+
+# Melakukan Import addition_to_sys.sql
+sudo mysql -u root -p < addition_to_sys.sql
+
+# Melakukan Import proxy_config_connection.sql
+sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
+```
+
+7. Prose instalasi selesai, selanjutnya adalah Dokumentasi penggunaan MySQL Cluster dengan Proxy Load Balancer
+
+## 4. Dokumentasi
