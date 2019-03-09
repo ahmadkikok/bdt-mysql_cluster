@@ -8,7 +8,7 @@ Mengimplementasikan MySQL Cluster dengan Proxy Load Balancer dengan Menggunakan 
    1. [Provisioning Clusterdb-1](#31-provisioning-clusterdb-1)
    2. [Provisioning Clusterdb-2 dan Clusterdb-3](#32-provisioning-clusterdb-2-dan-clusterdb-3)
    3. [Provisioning Clusterdb-4](#33-provisioning-clusterdb-4)
-4. [Dokumentasi](#4-dokum)
+4. [Dokumentasi](#4-dokumentasi)
 
 ## 1. Kebutuhan
 - Vagrant
@@ -203,7 +203,7 @@ sudo dpkg -i '/home/vagrant/install/mysql-client_7.6.9-1ubuntu18.04_amd64.deb'
 Pada provisioning ini adalah proses instalasi MySQL Server API, dikarenakan pada ``clusterdb2 dan clusterdb3`` Data Node berperan sebagai MySQL Server API juga.
 Selanjutnya adalah menjalan script berikut pada ``clusterdb2``:
 ```
-Install MySQL Server
+# Install MySQL Server
 sudo dpkg -i '/home/vagrant/install/mysql-cluster-community-server_7.6.9-1ubuntu18.04_amd64.deb'
 sudo cp '/vagrant/files/clusterdb2/mysql/my.cnf' '/etc/mysql/my.cnf'
 sudo systemctl restart mysql
@@ -289,7 +289,7 @@ LOAD MYSQL USERS TO RUNTIME;
 SAVE MYSQL USERS TO DISK;
 ```
 
-Pada kasus ini, username ``bdt`` mampu mengakses hostgroup_id 2, yaitu Node 192.168.33.12 dan 192.168.33.13, apabila tidak didefine, maka proxy tidak akan berjalan.
+Pada kasus ini, username ``bdt`` mampu mengakses hostgroup_id 2, yaitu Node ``192.168.33.12`` dan ``192.168.33.13``, apabila tidak didefine, maka proxy tidak akan berjalan.
 ```
 # Run This On Clusterdb2/3
 # Download Files Addition SYS
@@ -317,7 +317,7 @@ GRANT ALL PRIVILEGES on user.* to 'bdt'@'%';
 FLUSH PRIVILEGES;
 ```
 
-User ``bdt`` berfungsi sebagai user yang mampu mengakses penuh database user, dan pada proxysql telah dilakukan konfigurasi bahwa user ``bdt`` mampu memanipulasi data yang berada di node 192.168.33.12 dan 192.168.33.13.
+User ``bdt`` berfungsi sebagai user yang mampu mengakses penuh database user, dan pada proxysql telah dilakukan konfigurasi bahwa user ``bdt`` mampu memanipulasi data yang berada di node ``192.168.33.12`` dan ``192.168.33.13``.
 
 4. Lakukan poin 3.2 pada ``clusterdb3``, perbedaan hanya pada konfigurasi alamat address.
 5. Jalankan script pada ``clusterdb2`` atau ``clusterdb3``
@@ -343,6 +343,6 @@ sudo mysql -u root -p < addition_to_sys.sql
 sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
 ```
 
-7. Prose instalasi selesai, selanjutnya adalah Dokumentasi penggunaan MySQL Cluster dengan Proxy Load Balancer
+7. Proses instalasi selesai, selanjutnya adalah Dokumentasi penggunaan MySQL Cluster dengan Proxy Load Balancer
 
 ## 4. Dokumentasi
