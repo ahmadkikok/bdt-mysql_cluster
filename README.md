@@ -289,8 +289,7 @@ LOAD MYSQL USERS TO RUNTIME;
 SAVE MYSQL USERS TO DISK;
 ```
 
-Pada kasus ini, username bdt mampu mengakses hostgroup_id 2, yaitu Node 192.168.33.12 dan 192.168.33.13, apabila tidak didefine, maka proxy tidak akan berjalan.
-Selanjutnya adalah menjalan script berikut pada ``clusterdb2`` dan ``clusterdb3``
+Pada kasus ini, username ``bdt`` mampu mengakses hostgroup_id 2, yaitu Node 192.168.33.12 dan 192.168.33.13, apabila tidak didefine, maka proxy tidak akan berjalan.
 ```
 # Run This On Clusterdb2/3
 # Download Files Addition SYS
@@ -305,7 +304,7 @@ Selanjutnya adalah menjalan script berikut pada ``clusterdb2`` dan ``clusterdb3`
 #sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
 ```
 
-Serta pada ``proxy_config_connection.sql``:
+Konfigurasi pada ``proxy_config_connection.sql``:
 ```
 # Membuat user monitor default memonitoring proxysql
 CREATE USER 'monitor'@'%' IDENTIFIED BY 'bdt2019';
@@ -330,7 +329,10 @@ sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
 ```
 # Melakukan Import Proxy_Config.SQL
 sudo mysql -u admin -p -h 127.0.0.1 -P 6032 --prompt='ProxySQLAdmin> ' < /vagrant/mysql-dump/proxy_config.sql
+```
 
+Dan script berikut pada ``clusterdb2`` dan ``clusterdb3``
+```
 # Mengunduh addition_to_sys.sql
 curl -OL https://gist.github.com/lefred/77ddbde301c72535381ae7af9f968322/raw/5e40b03333a3c148b78aa348fd2cd5b5dbb36e4d/addition_to_sys.sql
 
