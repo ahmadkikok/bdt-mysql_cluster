@@ -1,13 +1,13 @@
 # Implementation MySQL Cluster with Proxy Load Balancer
 Mengimplementasikan MySQL Cluster dengan Proxy Load Balancer, sebelum mengimplementasikan, ada beberapa hal yang harus diperhatikan :
 
-##Kebutuhan
+## Kebutuhan
 - Vagrant
 - Bento/ubuntu18.04
 - MySQL Data Sample
 - MySQL Remote Software (Pada kasus ini saya menggunakan SQLYog)
 
-##Model Arsitektur
+## Model Arsitektur
 Pada desain MySQL Cluster kali ini, saya menggunakan 4 Cluster, dengan informasi tiap clusternya:
 
 | No | IP Address | Hostname | Deskripsi |
@@ -17,11 +17,11 @@ Pada desain MySQL Cluster kali ini, saya menggunakan 4 Cluster, dengan informasi
 | 3 | 192.168.33.13 | clusterdb3 | Sebagai Server 2 dan Node 2 |
 | 4 | 192.168.33.14 | clusterdb4 | Sebagai Load Balancer (ProxySQL) |
 
-##Instalasi
+## Instalasi
 1.  ``git clone `` https://github.com/ahmadkikok/bdt-mysql_cluster.git
 2. Hapus folder ``.vagrant`` untuk menghapus konfigurasi VB sebelumnya.
 3. Lakukan ``vagrant up`` dan lakukan ``vagrant ssh`` ditiap clusternya.
-###Provisioning Clusterdb-1
+### Provisioning Clusterdb-1
 
 
 ```
@@ -101,4 +101,4 @@ hostname=192.168.33.13 # In our case the MySQL server/client is on the same Drop
 ```
 Konfigurasi MySQL Server API berada, saya menggunakan 2 Server API yang bersamaan dengan lokasi Data Node.
 
-###Provisioning Clusterdb-2 dan Clusterdb-3
+### Provisioning Clusterdb-2 dan Clusterdb-3
