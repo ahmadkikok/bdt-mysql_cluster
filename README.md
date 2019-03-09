@@ -320,10 +320,13 @@ FLUSH PRIVILEGES;
 User ``bdt`` berfungsi sebagai user yang mampu mengakses penuh database user, dan pada proxysql telah dilakukan konfigurasi bahwa user ``bdt`` mampu memanipulasi data yang berada di node ``192.168.33.12`` dan ``192.168.33.13``.
 
 4. Lakukan poin 3.2 pada ``clusterdb3``, perbedaan hanya pada konfigurasi alamat address.
-5. Jalankan script pada ``clusterdb2`` atau ``clusterdb3``
+5. Jalankan script berikut pada ``clusterdb2`` atau ``clusterdb3``
 ```
-sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
+# Melakukan Import proxy_config_connection.sql
+sudo mysql -u root -p < /vagrant/mysql-dump/mysqlsampledatabase.sql
 ```
+
+Melakukan import MySQL sample database yang nantinya akan digunakan untuk proses uji coba.
 
 6. Jalankan script pada ``clusterdb4``
 ```
@@ -331,7 +334,7 @@ sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
 sudo mysql -u admin -p -h 127.0.0.1 -P 6032 --prompt='ProxySQLAdmin> ' < /vagrant/mysql-dump/proxy_config.sql
 ```
 
-Dan script berikut pada ``clusterdb2`` dan ``clusterdb3``
+Dan script berikut pada ``clusterdb2`` dan ``clusterdb3``:
 ```
 # Mengunduh addition_to_sys.sql
 curl -OL https://gist.github.com/lefred/77ddbde301c72535381ae7af9f968322/raw/5e40b03333a3c148b78aa348fd2cd5b5dbb36e4d/addition_to_sys.sql
@@ -342,6 +345,8 @@ sudo mysql -u root -p < addition_to_sys.sql
 # Melakukan Import proxy_config_connection.sql
 sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
 ```
+
+Script diatas berisi konfigurasi user yang akan digunakan nantinya serta konfigurasi proxy yang telah disediakan oleh proxySQL.
 
 7. Proses instalasi selesai, selanjutnya adalah Dokumentasi penggunaan MySQL Cluster dengan Proxy Load Balancer
 
