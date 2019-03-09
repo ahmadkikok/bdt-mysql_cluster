@@ -5,10 +5,19 @@ Mengimplementasikan MySQL Cluster dengan Proxy Load Balancer dengan Menggunakan 
 1. [Kebutuhan](#1-kebutuhan)
 2. [Model Arsitektur](#2-model-arsitektur)
 3. [Instalasi](#3-instalasi)
-   1. [Provisioning Clusterdb-1](#31-provisioning-clusterdb-1)
-   2. [Provisioning Clusterdb-2 dan Clusterdb-3](#32-provisioning-clusterdb-2-dan-clusterdb-3)
-   3. [Provisioning Clusterdb-4](#33-provisioning-clusterdb-4)
+	3.1. [Provisioning Clusterdb-1](#31-provisioning-clusterdb-1)
+	3.2. [Provisioning Clusterdb-2 dan Clusterdb-3](#32-provisioning-clusterdb-2-dan-clusterdb-3)
+	3.3. [Provisioning Clusterdb-4](#33-provisioning-clusterdb-4)
 4. [Dokumentasi](#4-dokumentasi)
+	4.1. [Instalasi Cluster Manager](#41-instalasi-cluster-manager)
+	4.2. [Instalasi Data Node](#42-instalasi-data-node)
+	4.3. [Instalasi Service API](#43-instalasi-service-api)
+	4.4. [NDB Status & NDB_MGM Status](#44-ndb-status--ndb_mgm-status)
+	4.5. [SQL Manipulation Data](#45-sql-manipulation-data)
+	4.6. [SQL Manipulation Data when Some API OFF](#46-sql-manipulation-data-when-some-api-off)
+	4.7. [Load Balancer ProxySQL](#47-load-balancer-proxysql)
+	4.8. [ProxySQL with SQLYog](#48-proxysql-with-sqlyog)
+5. [Referensi](#referensi)
 
 ## 1. Kebutuhan
 - Vagrant
@@ -456,6 +465,6 @@ Data pada ``clusterdb3`` ikut bertambah sesuai dengan yang ditambahkan melalui S
 
 Data pada ``clusterdb2`` ikut bertambah sesuai dengan yang ditambahkan melalui SQLYog.
 
-## Referensi
+## 5. Referensi
 https://www.digitalocean.com/community/tutorials/how-to-create-a-multi-node-mysql-cluster-on-ubuntu-18-04
 https://www.digitalocean.com/community/tutorials/how-to-use-proxysql-as-a-load-balancer-for-mysql-on-ubuntu-16-04
