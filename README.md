@@ -1,5 +1,14 @@
 # Implementation MySQL Cluster with Proxy Load Balancer
-Mengimplementasikan MySQL Cluster dengan Proxy Load Balancer, sebelum mengimplementasikan, ada beberapa hal yang harus diperhatikan :
+Mengimplementasikan MySQL Cluster dengan Proxy Load Balancer dengan Menggunakan 2 MySQL Server API, 2 MySQL Data Node, 1 MySQL Cluster Manager, dan 1 Proxy Load Balancer
+
+## Menu Cepat
+1. [Kebutuhan](#1-kebutuhan)
+2. [Model Arsitektur](#2-model)
+3. [Instalasi](#3-install)
+   1. [Provisioning Clusterdb-1](#31-prvs1)
+   2. [Provisioning Clusterdb-2 dan Clusterdb-3](#32-prvs23)
+   3. [Provisioning Clusterdb-4](#33-prvs4)
+4. [Dokumentasi](#4-dokum)
 
 ## 1. Kebutuhan
 - Vagrant
