@@ -3,11 +3,11 @@ Mengimplementasikan MySQL Cluster dengan Proxy Load Balancer dengan Menggunakan 
 
 ## Menu Cepat
 1. [Kebutuhan](#1-kebutuhan)
-2. [Model Arsitektur](#2-model)
-3. [Instalasi](#3-install)
-   1. [Provisioning Clusterdb-1](#31-prvs1)
-   2. [Provisioning Clusterdb-2 dan Clusterdb-3](#32-prvs23)
-   3. [Provisioning Clusterdb-4](#33-prvs4)
+2. [Model Arsitektur](#2-model-arsitektur)
+3. [Instalasi](#3-instalasi)
+   1. [Provisioning Clusterdb-1](#31-provisioning-clusterdb-1)
+   2. [Provisioning Clusterdb-2 dan Clusterdb-3](#32-provisioning-clusterdb-2-dan-clusterdb-3)
+   3. [Provisioning Clusterdb-4](#33-provisioning-clusterdb-4)
 4. [Dokumentasi](#4-dokum)
 
 ## 1. Kebutuhan
@@ -232,7 +232,7 @@ ndb-connectstring=192.168.33.11  # location of management server
 
 Yaitu lokasi service MySQL Server API yang berjalan pada ``192.168.33.12`` serta MySQL Cluster yang berjalan pada ``192.168.33.11``
 
-### 3.2 Provisioning Clusterdb-4
+### 3.3 Provisioning Clusterdb-4
 ```
 
 ```
