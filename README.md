@@ -73,7 +73,6 @@ sudo ufw allow from 192.168.33.13
 ```
 
 Pada provisioning di ``clusterdb1`` ini,  vagrant akan otomatis melakukan proses instalasi MySQL Cluster Manager, service, serta allow firewall, yang kemudian nantinya akan menggunakan konfigurasi yang sudah disetting dengan konfigurasi :
-
 ```
 [ndbd default]
 # Options affecting ndbd processes on all data nodes:
@@ -81,7 +80,6 @@ NoOfReplicas=2  # Number of replicas
 ```
 
 Konfigurasi ini adalah jumlah replikasi yang akan dilakukan
-
 ```
 [ndb_mgmd]
 # Management process options:
@@ -90,7 +88,6 @@ datadir=/var/lib/mysql-cluster  # Directory for the log files
 ```
 
 Konfigurasi dimana Cluster Manager berada, pada kasus ini berada pada ``192.168.33.11`` (clusterdb1)
-
 ```
 [ndbd]
 hostname=192.168.33.12 # Hostname/IP of the first data node
@@ -105,7 +102,6 @@ datadir=/usr/local/mysql/data   # Remote directory for the data files
 
 Konfigurasi ini adalah Data Node, saya menggunakan 2 Data Node dengan ID 2 dan ID 3 sebagai pembeda antar Nodenya.
 ```
-
 [mysqld]
 # SQL node options:
 hostname=192.168.33.12 # In our case the MySQL server/client is on the same Droplet as the cluster manager
@@ -164,7 +160,6 @@ sudo systemctl start ndbd
 ```
 
 Pada provisioning ini, adalah proses instalasi data node dengan konfigurasi letak instalasi MySQL Cluster di ``my.cnf`` sebagai berikut:
-
 ```
 [mysql_cluster]
 # Options for NDB Cluster processes:
@@ -172,7 +167,6 @@ ndb-connectstring=192.168.33.11  # location of cluster manager
 ```
 
 NDB akan mengkoneksikan data node ke MySQL Cluster yang berada pada alamat ``192.168.33.11``
-
 ```
 # Installation MySQL API
 # Get Download Files MySQL Server
@@ -208,7 +202,6 @@ sudo dpkg -i '/home/vagrant/install/mysql-client_7.6.9-1ubuntu18.04_amd64.deb'
 
 Pada provisioning ini adalah proses instalasi MySQL Server API, dikarenakan pada ``clusterdb2 dan clusterdb3`` Data Node berperan sebagai MySQL Server API juga.
 Selanjutnya adalah menjalan script berikut pada ``clusterdb2``:
-
 ```
 Install MySQL Server
 sudo dpkg -i '/home/vagrant/install/mysql-cluster-community-server_7.6.9-1ubuntu18.04_amd64.deb'
@@ -218,7 +211,6 @@ sudo systemctl enable mysql
 ```
 
 Pada script diatas adalah instalasi MySQL Server serta enable service pada saat startup vagrant, konfigurasi MySQL tidak berbeda jauh dengan konfigurasi Data Node:
-
 ```
 [mysqld]
 # Options for mysqld process:
@@ -234,8 +226,99 @@ Yaitu lokasi service MySQL Server API yang berjalan pada ``192.168.33.12`` serta
 
 ### 3.3 Provisioning Clusterdb-4
 ```
+# Install Proxy
+sudo apt-get update
 
+sudo cd /tmp
+
+sudo curl -OL https://github.com/sysown/proxysql/releases/download/v2.0.2/proxysql_2.0.2-dbg-ubuntu18_amd64.deb
+
+sudo dpkg -i proxysql_*
+
+sudo rm proxysql_*
+
+# Install MySQL Client
+sudo apt-get install mysql-client -y
+
+# Allow Port Proxy
+sudo ufw allow 33061
+
+sudo ufw allow 3306
+
+# Allow Firewall
+sudo ufw allow from 192.168.33.12
+
+sudo ufw allow from 192.168.33.13
+
+sudo ufw allow from 192.168.33.14
+
+# Enable and Start Service
+sudo systemctl enable proxysql
+
+sudo systemctl start proxysql
 ```
+
+Pada script ini adalah proses instalasi ProxySQL, Instalasi MySQL Client, serta allow firewall
+```
+# Export Files Configuration to ProxySQL
+#sudo mysql -u admin -p -h 127.0.0.1 -P 6032 --prompt='ProxySQLAdmin> ' < /vagrant/mysql-dump/proxy_config.sql
+```
+
+Pada script ini adalah proses konfigurasi ProxySQL dengan konfigurasi pada ``proxy_config.sql``:
+```
+# Mengganti Password Admin default menjadi bdt2019 dan melakukan reload
+UPDATE global_variables SET variable_value='admin:bdt2019' WHERE variable_name='admin-admin_credentials';
+LOAD ADMIN VARIABLES TO RUNTIME;
+SAVE ADMIN VARIABLES TO DISK;
+
+# Melakukan Set value monitor pada mysql-monitor dan melakukan reload
+UPDATE global_variables SET variable_value='monitor' WHERE variable_name='mysql-monitor_username';
+LOAD MYSQL VARIABLES TO RUNTIME;
+SAVE MYSQL VARIABLES TO DISK;
+
+# Melakukan insert data node, yaitu node 192.168.33.12 dan 192.168.33.13 dengan port 3306(MySQL) yang kemudian direload
+INSERT INTO mysql_group_replication_hostgroups (writer_hostgroup, backup_writer_hostgroup, reader_hostgroup, offline_hostgroup, active, max_writers, writer_is_also_reader, max_transactions_behind) VALUES (2, 4, 3, 1, 1, 3, 1, 100);
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (2, '192.168.33.12', 3306);
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (2, '192.168.33.13', 3306);
+LOAD MYSQL SERVERS TO RUNTIME;
+SAVE MYSQL SERVERS TO DISK;
+
+# Melakukan insert username dan password untuk mengakses node yang telah disetting
+INSERT INTO mysql_users(username, password, default_hostgroup) VALUES ('bdt', 'bdt2019', 2);
+LOAD MYSQL USERS TO RUNTIME;
+SAVE MYSQL USERS TO DISK;
+```
+
+Pada kasus ini, username bdt mampu mengakses hostgroup_id 2, yaitu Node 192.168.33.12 dan 192.168.33.13, apabila tidak didefine, maka proxy tidak akan berjalan.
+Selanjutnya adalah menjalan script berikut pada ``clusterdb2`` dan ``clusterdb3``
+```
+# Run This On Clusterdb2/3
+# Download Files Addition SYS
+#curl -OL https://gist.github.com/lefred/77ddbde301c72535381ae7af9f968322/raw/5e40b03333a3c148b78aa348fd2cd5b5dbb36e4d/addition_to_sys.sql
+
+# Run This On Clusterdb2/3
+# Export Files Addition
+#sudo mysql -u root -p < addition_to_sys.sql
+
+# Run This On Clusterdb2/3
+# Export Files Proxy Connect Configuration
+#sudo mysql -u root -p < /vagrant/mysql-dump/proxy_config_connection.sql
+```
+
+Serta pada ``proxy_config_connection.sql``:
+```
+# Membuat user monitor default memonitoring proxysql
+CREATE USER 'monitor'@'%' IDENTIFIED BY 'bdt2019';
+GRANT SELECT on sys.* to 'monitor'@'%';
+FLUSH PRIVILEGES;
+
+# Membuat user bdt yang digunakan untuk memanipulasi data melalui data node yang telah di set pada proxysql
+CREATE USER 'bdt'@'%' IDENTIFIED BY 'bdt2019';
+GRANT ALL PRIVILEGES on user.* to 'bdt'@'%';
+FLUSH PRIVILEGES;
+```
+
+User ``bdt`` berfungsi sebagai user yang mampu mengakses penuh database user, dan pada proxysql telah dilakukan konfigurasi bahwa user ``bdt`` mampu memanipulasi data yang berada di node 192.168.33.12 dan 192.168.33.13.
 
 4. Lakukan poin 3.2 pada ``clusterdb3``, perbedaan hanya pada konfigurasi alamat address.
 5. Jalankan script pada ``clusterdb2`` atau ``clusterdb3``
