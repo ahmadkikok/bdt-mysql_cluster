@@ -35,5 +35,3 @@ sudo systemctl start ndb_mgmd
 sudo ufw allow from 192.168.33.12
 
 sudo ufw allow from 192.168.33.13
-
-sudo ufw allow from 192.168.33.14
