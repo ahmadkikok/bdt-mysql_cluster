@@ -361,107 +361,107 @@ Script diatas berisi konfigurasi user yang akan digunakan nantinya serta konfigu
 
 ## 4. Dokumentasi
 ### 4.1 Instalasi Cluster Manager
-![](tugas_1_implementasi-mysql_cluster/screenshoot/ndb_manager_status.PNG)
+![](/screenshoot/ndb_manager_status.PNG)
 
 Cluster Manager Pada Clusterdb1.
 
 ### 4.2 Instalasi Data Node
-![](tugas_1_implementasi-mysql_cluster/screenshoot/node_id_2_status.PNG)
+![](/screenshoot/node_id_2_status.PNG)
 
 Data Node 1 Pada Clusterdb2.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/node_id_3_status.PNG)
+![](/screenshoot/node_id_3_status.PNG)
 
 Data Node 2 Pada Clusterdb3.
 
 ### 4.3 Instalasi Service API
-![](tugas_1_implementasi-mysql_cluster/screenshoot/mysqld_cluster3_status.PNG)
+![](/screenshoot/mysqld_cluster3_status.PNG)
 
 Service MySQL Pada clusterdb3.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/mysqld_cluster2_status.PNG)
+![](/screenshoot/mysqld_cluster2_status.PNG)
 
 Service MySQL Pada clusterdb2.
 
 ### 4.4 NDB Status & NDB_MGM Status
-![](tugas_1_implementasi-mysql_cluster/screenshoot/mysqld_ndb_cluster2_status.PNG)
+![](/screenshoot/mysqld_ndb_cluster2_status.PNG)
 
 Status running NDB pada Cluster2.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/mysqld_ndb_cluster3_status.PNG)
+![](/screenshoot/mysqld_ndb_cluster3_status.PNG)
 
 Status running NDB pada Cluster3.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/ndb_mgm_cluster2_status.PNG)
+![](/screenshoot/ndb_mgm_cluster2_status.PNG)
 
 Informasi Cluster pada ndb_mgm Clusterdb2.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/ndb_mgm_cluster3_status.PNG)
+![](/screenshoot/ndb_mgm_cluster3_status.PNG)
 
 Informasi Cluster pada ndb_mgm Clusterdb3.
 
 ### 4.5 SQL Manipulation Data
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_1_cluster2-insertdumpsql.PNG)
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_2_cluster3-showtablesafterinsert.PNG)
+![](/screenshoot/info_1_cluster2-insertdumpsql.PNG)
+![](/screenshoot/info_2_cluster3-showtablesafterinsert.PNG)
 
 Melakukan import mysqlsampledatabase.sql pada ``clusterdb2``.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_3_cluster2-selectpayment114.PNG)
+![](/screenshoot/info_3_cluster2-selectpayment114.PNG)
 
 Melakukan select customer yang memiliki nomor ``114`` pada ``clusterdb2``.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_4_cluster2-delete114nr27552.PNG)
+![](/screenshoot/info_4_cluster2-delete114nr27552.PNG)
 
 Melakukan delete data customer nomor ``114`` yang memiliki nomor check ``NR27552`` pada ``clusterdb2``.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_5_cluster3-datachanges.PNG)
+![](/screenshoot/info_5_cluster3-datachanges.PNG)
 
 Data pada ``clusterdb3`` ikut berubah sesuai dengan ``clusterdb2``.
 
 ### 4.6 SQL Manipulation Data when Some API OFF
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_6_cluster3-someapioff.PNG)
+![](/screenshoot/info_6_cluster3-someapioff.PNG)
 
 Memastikan salah satu service telah dimatikan.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_7_cluster3-deletedata.PNG)
+![](/screenshoot/info_7_cluster3-deletedata.PNG)
 
 Melakukan delete data customer nomor ``114`` yang memiliki nomor check ``GG31455`` pada ``clusterdb3``.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/info_8_cluster2-dataonnode2whensomeapioff.PNG)
+![](/screenshoot/info_8_cluster2-dataonnode2whensomeapioff.PNG)
 
 Data pada ``clusterdb2`` ikut berubah sesuai dengan ``clusterdb3``.
 
 ### 4.7 Load Balancer ProxySQL
-![](tugas_1_implementasi-mysql_cluster/screenshoot/cluster4_proxyon.PNG)
+![](/screenshoot/cluster4_proxyon.PNG)
 
 Proxy Server pada Clusterdb4.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/proxy_running_status.PNG)
+![](/screenshoot/proxy_running_status.PNG)
 
 Proxy Status, 2 Hostname ONLINE, yaitu pada ``clusterdb2`` dan ``clusterdb3``.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/proxy_running_status-someapioff.PNG)
+![](/screenshoot/proxy_running_status-someapioff.PNG)
 
 Ketika ``clusterdb2`` dimatikan, maka status akan berubah menjadi SHUNNED.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/proxy_hostname_status-someapioff.PNG)
+![](/screenshoot/proxy_hostname_status-someapioff.PNG)
 
 Hostname yang dipakai adalah hostname yang status ONLINE secara random, dikarenakan ``clusterdb2`` sedang dimatikan, sehingga default hostname adalah ``clusterdb3``.
 
 ### 4.8 ProxySQL with SQLYog
-![](tugas_1_implementasi-mysql_cluster/screenshoot/sqlyog_running.PNG)
+![](/screenshoot/sqlyog_running.PNG)
 
 Proxy berjalan pada hostname ``clusterdb3``.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/sqlyog_insertdata.PNG)
+![](/screenshoot/sqlyog_insertdata.PNG)
 
 Melakukan penambahan data office melalui SQLYog dengan menggunakan ProxySQL yang mengarah ke hostname ``clusterdb3``.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/sqlyog_result_clusterdb3.PNG)
+![](/screenshoot/sqlyog_result_clusterdb3.PNG)
 
 Data pada ``clusterdb3`` ikut bertambah sesuai dengan yang ditambahkan melalui SQLYog.
 
-![](tugas_1_implementasi-mysql_cluster/screenshoot/sqlyog_result_clusterdb2.PNG)
+![](/screenshoot/sqlyog_result_clusterdb2.PNG)
 
 Data pada ``clusterdb2`` ikut bertambah sesuai dengan yang ditambahkan melalui SQLYog.
 
