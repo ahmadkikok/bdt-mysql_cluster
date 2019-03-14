@@ -7,24 +7,14 @@
 	- [List Partition](#32-provisioning-clusterdb-2-dan-clusterdb-3)
 	- [Hash Partition](#33-provisioning-clusterdb-4)
 	- [Key Partition](#33-provisioning-clusterdb-4)
-4. [Dokumentasi](#4-dokumentasi)
-	- [Instalasi Cluster Manager](#41-instalasi-cluster-manager)
-	- [Instalasi Data Node](#42-instalasi-data-node)
-	- [Instalasi Service API](#43-instalasi-service-api)
-	- [NDB Status & NDB_MGM Status](#44-ndb-status--ndb_mgm-status)
-	- [SQL Manipulation Data](#45-sql-manipulation-data)
-	- [SQL Manipulation Data when Some API OFF](#46-sql-manipulation-data-when-some-api-off)
-	- [Load Balancer ProxySQL](#47-load-balancer-proxysql)
-	- [ProxySQL with SQLYog](#48-proxysql-with-sqlyog)
-5. [Referensi](#5-referensi)
 
 ## 1. Check-Plugin Active
 
-![](/tugas_2_implementasi-partisi/screenshoot/create_databases_tugas2)
+![](/tugas_2_implementasi-partisi/screenshoot/create_databases_tugas2.PNG)
 
 Menambahkan database baru ``tugas2`` pada service.
 
-![](/tugas_2_implementasi-partisi/screenshoot/permission_userbdt_fordatabasetugas2)
+![](/tugas_2_implementasi-partisi/screenshoot/permission_userbdt_fordatabasetugas2.PNG)
 
 Memberikan permission agar user ``bdt`` dapat mengakses database ``tugas2`` melalui ProxySQL.
 
@@ -47,7 +37,7 @@ Pada ProxySQL.
 
 Sehingga akan menghasilkan hasil seperti berikut :
 
-![](/tugas_2_implementasi-partisi/screenshoot/check_support_partitioning)
+![](/tugas_2_implementasi-partisi/screenshoot/check_support_partitioning.PNG)
 
 ## 2. Create Partition
 
