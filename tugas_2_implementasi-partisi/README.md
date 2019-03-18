@@ -167,7 +167,7 @@ ORDER BY serverid ASC;
 
 ![](/tugas_2_implementasi-partisi/screenshoot/result_value_hash.PNG)
 
-Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat berdasarkan hash dari masing masing value yang dimasukan, dan akan dikelompokan berdasarkan jumlah partisi yang dibuat.
+Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat berdasarkan hash dari masing masing value yang dimasukan, dan akan dikelompokan berdasarkan jumlah partisi yang dibuat dan dengan menggunakan N = MOD(expr, num).
 
 ### 2.4 Key Partition
 ~~~
@@ -216,3 +216,61 @@ ORDER BY serverid ASC;
 ![](/tugas_2_implementasi-partisi/screenshoot/result_value_key.PNG)
 
 Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat berdasarkan key dari masing masing value yang dimasukan, dan akan dikelompokan berdasarkan jumlah partisi yang dibuat, pada partisi key ini memiliki kesamaan dengan hash, hanya saja berdasarkan unique key yang dibuat pada saat create table.
+
+## 3. Testing "A Typical Use Case: Time Series Data"
+
+### Using Explain
+
+![](/tugas_2_implementasi-partisi/screenshoot/explain_measures.PNG)
+
+Hasil explain pada table measure.
+
+![](/tugas_2_implementasi-partisi/screenshoot/explain_measures_partition.PNG)
+
+Hasil explain pada table measure partitioned.
+
+### The SELECT Queries Benchmark
+
+![](/tugas_2_implementasi-partisi/screenshoot/select_measures.PNG)
+
+Hasil select pada table measure.
+
+![](/tugas_2_implementasi-partisi/screenshoot/select_measures_partition.PNG)
+
+Hasil select pada table measure partitioned.
+
+### The Big Delete Benchmark
+
+~~~
+ALTER TABLE `tugas2`.`measures` 
+ADD INDEX `index1` (`measure_timestamp` ASC);
+
+ALTER TABLE `tugas2`.`partitioned_measures` 
+ADD INDEX `index1` (`measure_timestamp` ASC);
+~~~
+
+Mencoba penghapusan besar-besaran data lama dan melihat berapa lama, sebelum itu melakukan penambahan indeks kembali pada kedua table.
+
+![](/tugas_2_implementasi-partisi/screenshoot/delete_measures.PNG)
+
+Hasil delete pada table measure.
+
+![](/tugas_2_implementasi-partisi/screenshoot/delete_measures_partition.PNG)
+
+Hasil delete pada table measure partitioned.
+
+![](/tugas_2_implementasi-partisi/screenshoot/delete_measures2.PNG)
+
+Hasil delete pada table measure membutuhkan waktu lebih dari 2 menit.
+
+![](/tugas_2_implementasi-partisi/screenshoot/delete_measures_partition2.PNG)
+
+Hasil delete pada table measure partitioned waktu sangat cepat tidak mencapai 5 detik.
+
+#### Kesimpulan
+
+Kesimpulan pada penggunaan partisi ini, data akan lebih cepat dan dalam pencarian akan lebih mudah, karena data sudah di bagi kedalam beberapa partisi yang telah di atur sesuai partisi yang dibutuhkan.
+
+
+# 4. Referensi
+https://www.vertabelo.com/blog/technical-articles/everything-you-need-to-know-about-mysql-partitions
