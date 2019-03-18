@@ -110,7 +110,6 @@ INSERT INTO serverlogs (serverid, logdata, created) VALUES (956,'Test','2019-03-
 Melakukan insert value kedalam ``serverlogs``, yang nantinya value tersebut akan otomatis dipindahkan kedalam partisi yang telah dibuat.
 
 ~~~
-
 SELECT *,'server_east' FROM serverlogs PARTITION (server_east) UNION ALL SELECT *,'server_west' FROM serverlogs PARTITION (server_west) ORDER BY serverid,server_east ASC;
 ~~~
 
@@ -119,5 +118,55 @@ SELECT *,'server_east' FROM serverlogs PARTITION (server_east) UNION ALL SELECT 
 Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat, seperti pada contoh, yang memiliki ``serverid`` 1,43 akan dikelompokan kedalam wilayah ``server_east``.
 
 ### 2.3 Hash Partition
+~~~
+CREATE TABLE serverlogs2 (
+    serverid INT NOT NULL, 
+    logdata BLOB NOT NULL,
+    created DATETIME NOT NULL
+)
+PARTITION BY HASH (serverid)
+PARTITIONS 10;
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/create_hash.PNG)
+
+Melakukan create table ``serverlogs2`` serta melakukan partisi dengan menggunakan hash, partisi yang dibuat adalah sebanyak 10.
+
+~~~
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (1,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (43,'Test','2019-03-02 17:00:48');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (65,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (12,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (56,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (73,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (534,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (6422,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (196,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (956,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (22,'Test','2019-03-01 17:00:47');
+
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/insert_value_hash.PNG)
+
+Melakukan insert value kedalam ``serverlogs2``, yang nantinya value tersebut akan otomatis dipindahkan kedalam partisi yang telah dibuat berdasarkan hash.
+
+~~~
+SELECT *,'p0' FROM serverlogs2 PARTITION (p0) UNION ALL 
+SELECT *,'p1' FROM serverlogs2 PARTITION (p1) UNION ALL 
+SELECT *,'p2' FROM serverlogs2 PARTITION (p2) UNION ALL 
+SELECT *,'p3' FROM serverlogs2 PARTITION (p3) UNION ALL 
+SELECT *,'p4' FROM serverlogs2 PARTITION (p4) UNION ALL 
+SELECT *,'p5' FROM serverlogs2 PARTITION (p5) UNION ALL 
+SELECT *,'p6' FROM serverlogs2 PARTITION (p6) UNION ALL 
+SELECT *,'p7' FROM serverlogs2 PARTITION (p7) UNION ALL 
+SELECT *,'p8' FROM serverlogs2 PARTITION (p8) UNION ALL 
+SELECT *,'p9' FROM serverlogs2 PARTITION (p9)
+ORDER BY serverid ASC;
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/result_value_hash.PNG)
+
+Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat berdasarkan hash dari masing masing value yang dimasukan, dan akan dikelompokan berdasarkan jumlah partisi yang dibuat.
 
 ### 2.4 Key Partition
