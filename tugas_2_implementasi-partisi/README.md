@@ -71,7 +71,7 @@ INSERT INTO rc1 (a,b) VALUES (6,13);
 
 ![](/tugas_2_implementasi-partisi/screenshoot/insert_value_range.PNG)
 
-Melakukan insert value kedalam rc1, yang nantinya value tersebut akan otomatis dipindahkan kedalam partisi yang telah dibuat.
+Melakukan insert value kedalam ``rc1``, yang nantinya value tersebut akan otomatis dipindahkan kedalam partisi yang telah dibuat.
 
 ~~~
 SELECT *,'p0' FROM rc1 PARTITION (p0) UNION ALL SELECT *,'p3' FROM rc1 PARTITION (p3) ORDER BY a,b ASC;
@@ -82,6 +82,41 @@ SELECT *,'p0' FROM rc1 PARTITION (p0) UNION ALL SELECT *,'p3' FROM rc1 PARTITION
 Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat, seperti pada contoh, yang memiliki values <= 5,12 akan dimasukan kedalam ``p0``.
 
 ### 2.2 List Partition
+~~~
+CREATE TABLE serverlogs (
+    serverid INT NOT NULL, 
+    logdata BLOB NOT NULL,
+    created DATETIME NOT NULL
+)
+PARTITION BY LIST (serverid)(
+    PARTITION server_east VALUES IN(1,43,65,12,56,73),
+    PARTITION server_west VALUES IN(534,6422,196,956,22)
+);
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/create_list.PNG)
+
+Melakukan create table ``serverlogs`` serta melakukan partisi pembagian kode area sesuai partisi yang dibuat.
+
+~~~
+INSERT INTO serverlogs (serverid, logdata, created) VALUES (1,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs (serverid, logdata, created) VALUES (43,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs (serverid, logdata, created) VALUES (534,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs (serverid, logdata, created) VALUES (956,'Test','2019-03-01 17:00:47');
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/insert_value_list.PNG)
+
+Melakukan insert value kedalam ``serverlogs``, yang nantinya value tersebut akan otomatis dipindahkan kedalam partisi yang telah dibuat.
+
+~~~
+
+SELECT *,'server_east' FROM serverlogs PARTITION (server_east) UNION ALL SELECT *,'server_west' FROM serverlogs PARTITION (server_west) ORDER BY serverid,server_east ASC;
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/result_value_list.PNG)
+
+Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat, seperti pada contoh, yang memiliki ``serverid`` 1,43 akan dikelompokan kedalam wilayah ``server_east``.
 
 ### 2.3 Hash Partition
 
