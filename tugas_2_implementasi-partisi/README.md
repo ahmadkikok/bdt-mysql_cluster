@@ -7,7 +7,12 @@
 	- [List Partition](#22-list-partition)
 	- [Hash Partition](#23-hash-partition)
 	- [Key Partition](#24-key-partition)
-3. [Testing "A Typical Use Case: Time Series Data"](#24-key-partition)
+3. [Testing "A Typical Use Case: Time Series Data"](#3-testing-a-typical-use-case-time-series-data)
+	- [Using Explain](#using-explain)
+	- [The SELECT Queries Benchmark](#the-select-queries-benchmark)
+	- [The Big Delete Benchmark](#the-big-delete-benchmark)
+	- [Conclusion](#conclusion)
+4. [Referensi](#4-referensi)
 
 ## 1. Check-Plugin Active
 
@@ -267,7 +272,7 @@ Hasil delete pada table measure membutuhkan waktu lebih dari 2 menit.
 
 Hasil delete pada table measure partitioned waktu sangat cepat tidak mencapai 5 detik.
 
-#### Kesimpulan
+#### Conclusion
 
 Kesimpulan pada penggunaan partisi ini, data akan lebih cepat dan dalam pencarian akan lebih mudah, karena data sudah di bagi kedalam beberapa partisi yang telah di atur sesuai partisi yang dibutuhkan.
 
