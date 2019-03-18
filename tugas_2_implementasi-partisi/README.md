@@ -1,12 +1,13 @@
 # Implementasi Partisi
 
 ## Menu Cepat
-1. [Check-Plugin Active](#1-kebutuhan)
-2. [Create Partition](#2-model-arsitektur)
-	- [Range Partition](#31-provisioning-clusterdb-1)
-	- [List Partition](#32-provisioning-clusterdb-2-dan-clusterdb-3)
-	- [Hash Partition](#33-provisioning-clusterdb-4)
-	- [Key Partition](#33-provisioning-clusterdb-4)
+1. [Check-Plugin Active](#1-check-plugin-active)
+2. [Create Partition](#2-create-partition)
+	- [Range Partition](#21-range-partition)
+	- [List Partition](#22-list-partition)
+	- [Hash Partition](#23-hash-partition)
+	- [Key Partition](#24-key-partition)
+3. [Testing "A Typical Use Case: Time Series Data"](#24-key-partition)
 
 ## 1. Check-Plugin Active
 
@@ -144,7 +145,6 @@ INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (6422,'Test','2019-0
 INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (196,'Test','2019-03-01 17:00:47');
 INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (956,'Test','2019-03-01 17:00:47');
 INSERT INTO serverlogs2 (serverid, logdata, created) VALUES (22,'Test','2019-03-01 17:00:47');
-
 ~~~
 
 ![](/tugas_2_implementasi-partisi/screenshoot/insert_value_hash.PNG)
@@ -170,3 +170,49 @@ ORDER BY serverid ASC;
 Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat berdasarkan hash dari masing masing value yang dimasukan, dan akan dikelompokan berdasarkan jumlah partisi yang dibuat.
 
 ### 2.4 Key Partition
+~~~
+CREATE TABLE serverlogs4 (
+    serverid INT NOT NULL, 
+    logdata BLOB NOT NULL,
+    created DATETIME NOT NULL,
+    UNIQUE KEY (serverid)
+)
+PARTITION BY KEY()
+PARTITIONS 5;
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/create_key.PNG)
+
+Melakukan create table ``serverlogs4`` serta melakukan partisi dengan menggunakan key, partisi yang dibuat adalah sebanyak 5.
+
+~~~
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (1,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (43,'Test','2019-03-02 17:00:48');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (65,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (12,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (56,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (73,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (534,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (6422,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (196,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (956,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (22,'Test','2019-03-01 17:00:47');
+INSERT INTO serverlogs4 (serverid, logdata, created) VALUES (5543,'Test','2019-03-01 17:00:47');
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/insert_value_key.PNG)
+
+Melakukan insert value kedalam ``serverlogs4``, yang nantinya value tersebut akan otomatis dipindahkan kedalam partisi yang telah dibuat berdasarkan key.
+
+~~~
+SELECT *,'p0' FROM serverlogs4 PARTITION (p0) UNION ALL 
+SELECT *,'p1' FROM serverlogs4 PARTITION (p1) UNION ALL 
+SELECT *,'p2' FROM serverlogs4 PARTITION (p2) UNION ALL 
+SELECT *,'p3' FROM serverlogs4 PARTITION (p3) UNION ALL 
+SELECT *,'p4' FROM serverlogs4 PARTITION (p4)
+ORDER BY serverid ASC;
+~~~
+
+![](/tugas_2_implementasi-partisi/screenshoot/result_value_key.PNG)
+
+Pada hasil diatas, value yang dimasukan akan otomatis dipindahkan sesuai partisi yang dibuat berdasarkan key dari masing masing value yang dimasukan, dan akan dikelompokan berdasarkan jumlah partisi yang dibuat, pada partisi key ini memiliki kesamaan dengan hash, hanya saja berdasarkan unique key yang dibuat pada saat create table.
