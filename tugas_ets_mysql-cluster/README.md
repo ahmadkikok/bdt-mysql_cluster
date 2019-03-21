@@ -84,7 +84,7 @@ sudo cp '/vagrant/install/schema.php' '/var/www/html/wordpress/wp-admin/includes
 
 Ikuti langkah sesuai petunjuk instalasi ``wordpress``, maka akan muncul :
 
-![](/tugas_ets_mysql-cluster/screnshoot/install_view_website.PNG)
+![](/tugas_ets_mysql-cluster/screnshoot/install_view_login.PNG)
 
 ``WordPress`` berhasil diinstall.
 
