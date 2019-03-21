@@ -1,5 +1,12 @@
 # Implementasi Wordpress pada MySQL Cluster dan ProxySQL
 
+## Menu Cepat
+1. [Model Arsitektur](#1-model-arsitekturn)
+2. [Instalasi Wordpress](#2-instalasi-wordpress)
+3. [Test Database Wordpress](#3-test-database-wordpress)
+4. [Test Using Jmeter](#4-test-using-jmeter)
+5. [Referensi](#5-referensi)
+
 ## 1. Model Arsitektur
 Pada desain MySQL Cluster kali ini, saya menggunakan 4 Cluster, dengan informasi tiap clusternya:
 
@@ -14,14 +21,18 @@ Dan ditambah instalasi ``apache`` dan ``wordpress`` dilakukan pada ``clusterdb4`
 
 ## 2. Instalasi Wordpress
 1. Membuat database baru ``ets`` pada ``clusterdb2/3``, dan memberikan hak akses terhadap user ``bdt`` pada kedua cluster.
+
 ![](/tugas_ets_mysql-cluster/screnshoot/create_database_ets.PNG)
+
 ~~~
 GRANT ALL PRIVILEGES on ets.* to 'bdt'@'%';
 FLUSH PRIVILEGES;
 ~~~
 
 2. Install Apache2 pada ``clusterdb4`` (proxy), dan php sebagai kebutuhan wordpress.
+
 ![](/tugas_ets_mysql-cluster/screnshoot/install_apache2.PNG)
+
 ~~~
 sudo apt-get install php -y
 sudo apt-get install php-mysql
@@ -54,39 +65,64 @@ define( 'DB_HOST', '192.168.33.14:6033' );
 ~~~
 
 5. Ubah database engine menjadi ``ndb`` pada ``wordpress\wp-admin\includes\schema.php`` salah satu contoh :
+
 ![](/tugas_ets_mysql-cluster/screnshoot/change_database_engine.PNG)
+
 Lakukan hal yang sama pada semua tables yang akan dibuat. Pada kasus ini saya sudah merubah semua tables, sehinggi hanya perlu mengcopy file schema :
+
 ```
 sudo cp '/vagrant/install/schema.php' '/var/www/html/wordpress/wp-admin/includes/'
 ```
 
 6. Buka pada browser ``http://192.168.33.14/wordpress`` maka akan muncul tampilan instalasi ``wordpress`` :
+
 ![](/tugas_ets_mysql-cluster/screnshoot/install_view_website.PNG)
 
 Ikuti langkah sesuai petunjuk instalasi ``wordpress``, maka akan muncul :
+
 ![](/tugas_ets_mysql-cluster/screnshoot/install_view_website.PNG)
 
 ``WordPress`` berhasil diinstall.
 
 6. Schema yang dibuat secara otomatis oleh wordpress telah ada di ``cluster2`` dan ``cluster3`` :
+
 ![](/tugas_ets_mysql-cluster/screnshoot/install_view_schemas.PNG)
 
 ## 3. Test Database Wordpress
+
 ![](/tugas_ets_mysql-cluster/screnshoot/test_info_cluster.PNG)
+
 Status mysql-cluster semua node terkoneksi dengan baik
 
 Ketika salah satu node dimatikan, dan melakukan insert data via wordpress(menambahkan postingan baru) :
+
 ![](/tugas_ets_mysql-cluster/screnshoot/test_dataid2_off.PNG)
+
 ![](/tugas_ets_mysql-cluster/screnshoot/test_dataid2_off_berhasil.PNG)
+
 Ketika node dengan id 2 dimatikan, otomatis node yang berjalan adalah node dengan id 3, dan posting berhasil dilakukan.
 
 Sekarang mencoba ketika node id 2 diaktifkan dan id 3 dimatikan, maka hasilnya :
+
 ![](/tugas_ets_mysql-cluster/screnshoot/test_dataid3_off.PNG)
+
 ![](/tugas_ets_mysql-cluster/screnshoot/test_dataid3_off_berhasil.PNG)
+
 Ketika node dengan id 2 dinyalakan, dan node id 3 dimatikan, data masih tetap sama, yang artinya mysql-cluster berhasil saling mereplikasi.
 
 Sekarang mencoba ketika kedua node dimatikan :
+
 ![](/tugas_ets_mysql-cluster/screnshoot/test_dataid23_off.PNG)
+
 Ketika kedua node mati, otomatis service akan mati dikarenakan service tidak bsa mengakses data node manapun (error).
+
 ![](/tugas_ets_mysql-cluster/screnshoot/test_dataid23_off_gagal.PNG)
+
 Dan ketika kedua data node mati, otomatis wordpress tidak bisa membaca semua tables yang dibutuhkan, sehingga wordpress meminta kembali penginstallan ulang.
+
+## 4. Test Using Jmeter
+
+## 5. Referensi
+https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_1_implementasi-mysql_cluster
+https://www.digitalocean.com/community/tutorials/how-to-create-a-multi-node-mysql-cluster-on-ubuntu-18-04
+https://www.digitalocean.com/community/tutorials/how-to-use-proxysql-as-a-load-balancer-for-mysql-on-ubuntu-16-04
