@@ -1,10 +1,14 @@
 # Implementasi Wordpress pada MySQL Cluster dan ProxySQL
 
 ## Menu Cepat
-1. [Model Arsitektur](#1-model-arsitekturn)
+1. [Model Arsitektur](#1-model-arsitektur)
 2. [Instalasi Wordpress](#2-instalasi-wordpress)
 3. [Test Database Wordpress](#3-test-database-wordpress)
 4. [Test Using Jmeter](#4-test-using-jmeter)
+	- [Add Thread Group](#41-add-thread-group)
+	- [Add jMeter Element](#42-add-jmeter-element)
+	- [Add Listener](#43-add-listener)
+	- [Run Test](#44-run-test)
 5. [Referensi](#5-referensi)
 
 ## 1. Model Arsitektur
@@ -121,8 +125,46 @@ Ketika kedua node mati, otomatis service akan mati dikarenakan service tidak bsa
 Dan ketika kedua data node mati, otomatis wordpress tidak bisa membaca semua tables yang dibutuhkan, sehingga wordpress meminta kembali penginstallan ulang.
 
 ## 4. Test Using Jmeter
+Melakukan load test menggunakan jmeter, beberapa step yang harus dilakukan pertama adalah menyiapkan plan :
+
+### 4.1 Add Thread Group
+1. Klik Kanan Test Plan
+2. Add >Threads ( Users ) > Thread Group
+3. Dalam kontrol panel Thread Group, Entri pada Thread Properties :
+– Number of threads (users) : isi berapa user/visitor yang akan mengakses web.
+– Ramp-Up period ( in seconds ) : isi berapa waktu delay antara user satu dengan yang lainnya dalam mengakses web.
+– Loop Count : waktu eksekusi, bertahap atau seterusnya.
+
+### 4.2 Add jMeter Element
+Menambahkan web server/IP Address yang akan ditest. Caranya :
+1. Klik Kanan Threads Group
+2. Add > Config Element > HTTP Request Defaults
+3. Pada Web Server isi Server Name atau IP dan Portnya, atau gampangnya isi website/url yang akan ditest. URL diisi dengan format http://www.
+4. Jika tidak hanya halaman utama yang di test, kita bisa menambahkan path/foldernya, caranya :
+- Klik Kanan Threads Group
+- Add > Sampler > HTTP Request
+- Isi web server, port dan path
+
+### 4.3 Add Listener
+Menampilkan proses dan hasil test secara grafis atau bentuk tabel. Caranya :
+1. Klik Kanan Test Plan
+2. Add > Listener > Graph Result
+3. Add > Listener > View Results in Table
+
+### 4.4 Run Test
+Menjalankan Test secara otomatis. Caranya :
+1. Simpan terlebih dahulu Test Plan yang telah kita buat di File > Save ( Ctrl + S ).
+2. Klik Run atau Ctrl + R, jMeter akan mulai mensimulasi sejumlah user dalam mengakses web server yang telah ditentukan.
+
+Berikut adalah hasil dokumentasi yang dilakukan dalam pengujian load test menggunakan jmeter.
+![](/tugas_ets_mysql-cluster/screnshoot/test_jmeter_1.PNG)
+![](/tugas_ets_mysql-cluster/screnshoot/test_jmeter_2.PNG)
+![](/tugas_ets_mysql-cluster/screnshoot/test_jmeter_3.PNG)
+![](/tugas_ets_mysql-cluster/screnshoot/test_jmeter_4_graph.PNG)
+![](/tugas_ets_mysql-cluster/screnshoot/test_jmeter_5_table.PNG)
 
 ## 5. Referensi
 https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_1_implementasi-mysql_cluster
+https://www.youtube.com/watch?v=yNnbW2n9s8E
 https://www.digitalocean.com/community/tutorials/how-to-create-a-multi-node-mysql-cluster-on-ubuntu-18-04
 https://www.digitalocean.com/community/tutorials/how-to-use-proxysql-as-a-load-balancer-for-mysql-on-ubuntu-16-04
