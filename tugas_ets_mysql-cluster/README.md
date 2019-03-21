@@ -165,6 +165,9 @@ Berikut adalah hasil dokumentasi yang dilakukan dalam pengujian load test menggu
 
 ## 5. Referensi
 https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_1_implementasi-mysql_cluster
+
 https://www.youtube.com/watch?v=yNnbW2n9s8E
+
 https://www.digitalocean.com/community/tutorials/how-to-create-a-multi-node-mysql-cluster-on-ubuntu-18-04
+
 https://www.digitalocean.com/community/tutorials/how-to-use-proxysql-as-a-load-balancer-for-mysql-on-ubuntu-16-04
