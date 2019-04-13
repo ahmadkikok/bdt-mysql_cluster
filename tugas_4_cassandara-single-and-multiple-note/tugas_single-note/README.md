@@ -1,29 +1,7 @@
 # Implementation Cassandra Single Note
 Mengimplementasikan cassandra single note, pada pengimplementasi-an cassandra kali ini, saya membuat vagrant boxes sebanyak 2, dengan konfigurasi vagrant :
 
-~~~
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-Vagrant.configure("2") do |config|
-
-(1..2).each do |i|
-  config.vm.define "cassandra#{i}" do |node|
-    node.vm.box = "bento/ubuntu-14.04"
-    node.vm.hostname = "cassandra#{i}"
-    node.vm.network "private_network", ip: "192.168.33.1#{i}"
-
-    node.vm.provider "virtualbox" do |vb|
-      vb.gui = false
-      vb.name = "cassandra#{i}"
-      vb.memory = "1024"
-    end
-	
-    #node.vm.provision "shell", path: "provision/dbcluster#{i}.sh", privileged: false
-    end
-  end
-end
-~~~
+![](/tugas_4_cassandara-single-and-multiple-note/tugas_single-note/screenshoot/cassandra_vagrant.PNG)
 
 cassandra#1 yang akan kita gunakan pada implementasi single note ini.
 cassandra#2 akan digunakan untuk tugas selanjutnya berupa cassandra multi node.
