@@ -4,6 +4,7 @@ Mengimplementasikan cassandra single note, pada pengimplementasi-an cassandra ka
 ![](/tugas_4_cassandara-single-and-multiple-note/tugas_single-note/screenshoot/cassandra_vagrant.PNG)
 
 cassandra#1 yang akan kita gunakan pada implementasi single note ini.
+
 cassandra#2 akan digunakan untuk tugas selanjutnya berupa cassandra multi node.
 
 ## Menu Cepat
@@ -133,4 +134,5 @@ Cassandra telah berhasil di install dan berhasil di jalankan pada vagrant boxes 
 
 ## 3. Referensi
 https://www.digitalocean.com/community/tutorials/how-to-install-cassandra-and-run-a-single-node-cluster-on-ubuntu-14-04
+
 https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-14-04                       
