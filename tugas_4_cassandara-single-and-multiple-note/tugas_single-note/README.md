@@ -118,7 +118,7 @@ sudo service cassandra status
 
 Maka akan muncul seperti ini :
 
-![](/tugas_4_cassandara-single-and-multiple-note/tugas_single-note/screenshoot/cassandra_add_key.PNG)
+![](/tugas_4_cassandara-single-and-multiple-note/tugas_single-note/screenshoot/cassandra_status.PNG)
 
 5. Check node status dengan cara :
 ```
