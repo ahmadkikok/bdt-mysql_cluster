@@ -8,8 +8,8 @@ cassandra#2 lakukan instalasi cassandra sesuai penginstalan cassandra yang di la
 1. [Kebutuhan](#1-kebutuhan)
 2. [Instalasi](#2-instalasi)
 	- [Firewall](#21-firewall)
-	- [Oracle Java Virtual Machine](#22-oracle-java-virtual-machine)
-	- [Cassandra](#23-cassandra)
+	- [Konfigurasi Cluster](#22-konfigurasi-cluster)
+	- [Konfigurasi Firewall](#23-konfigurasi-firewall)
 3. [Referensi](#3-referensi)
 
 ## 1. Kebutuhan
@@ -43,7 +43,7 @@ sudo rm -rf /var/lib/cassandra/data/system/*
 2. Konfigurasi cassandra berada pada folder ``/etc/cassandra`` konfigurasi filenya yaitu ``cassandra.yaml``, lakukan konfigurasi pada file tersebut, pada kasus ini saya melakukan konfigurasi :
 ```
 .....
-cluster_name: 'Test Cluster' #Nama Clustermu, harus sama tiap node!
+cluster_name: 'Test Cluster'
 .....
 seed_provider:
     # Addresses of hosts that are deemed contact points. 
@@ -120,6 +120,6 @@ Cassandra telah selesai di install dan note berjalan dengan baik.
 ## 3. Referensi
 https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-14-04                   
 https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_4_cassandara-single-and-multiple-note/tugas_single-note
-https://www.digitalocean.com/community/tutorials/how-to-install-cassandra-and-run-a-single-node-cluster-on-ubuntu-14-04
-https://www.digitalocean.com/community/tutorials/how-to-run-a-multi-node-cluster-database-with-cassandra-on-ubuntu-14-04
-https://www.digitalocean.com/community/tutorials/how-to-implement-a-basic-firewall-template-with-iptables-on-ubuntu-14-04
+https://www.digitalocean.com/community/tutorials/how-to-install-cassandra-and-run-a-single-node-cluster-on-ubuntu-14-04                                                                            
+https://www.digitalocean.com/community/tutorials/how-to-run-a-multi-node-cluster-database-with-cassandra-on-ubuntu-14-04                                                                           
+https://www.digitalocean.com/community/tutorials/how-to-implement-a-basic-firewall-template-with-iptables-on-ubuntu-14-04                                                                            
