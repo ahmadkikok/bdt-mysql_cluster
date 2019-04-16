@@ -16,10 +16,10 @@ cassandra#2 (192.168.33.12) akan digunakan untuk tugas selanjutnya berupa cassan
 	- [User dan Sudo](#31-user-dan-sudo)
 	- [Oracle Java Virtual Machine](#32-oracle-java-virtual-machine)
 	- [Cassandra](#33-cassandra)
-4. [CRUD dan Datasets](#4-crud-and-datasets)
-	- [Datasets] (#41-datasets)
-	- [Import Datasets] (#42-import-datasets)
-	- [CRUD Operation] (#43-crud-operation)	
+4. [CRUD dan Datasets](#4-crud-dan-datasets)
+	- [Datasets](#41-datasets)
+	- [Import Datasets](#42-import-datasets)
+	- [CRUD Operation](#43-crud-operation)	
 5. [Referensi](#5-referensi)
 
 ## 1. Kebutuhan
@@ -165,13 +165,13 @@ Cassandra telah berhasil di install dan berhasil di jalankan pada vagrant boxes 
 
 ## 4. CRUD dan Datasets
 ### 4.1 Datasets
-Pada kali ini saya menggunakan datasets yang berasal dari www.kaggle.com, datasets yang saya gunakan adalah "Stanford Card Datasets".
+Pada kali ini saya menggunakan datasets yang berasal dari www.kaggle.com, datasets yang saya gunakan adalah "1.2 Million Used Car Listings Datasets".
 
 ![](/tugas_4_cassandara-single-and-multiple-note/tugas_single-note/screenshoot/datasets.PNG)
 
-https://www.kaggle.com/jutrera/stanford-car-dataset-by-classes-folder#names.csv
+https://www.kaggle.com/jpayne/852k-used-car-listings#true_car_listings.csv
 
-Datasets ini berisi daftar nama mobil SUV, dimana hanya terdapat 1 atribut pada datasets ini, yaitu nama.
+Datasets ini berisi daftar mobil yang digunakan.
 
 ### 4.2 Import Datasets
 1. Pertama-tama yang dilakukan adalah login melalui ``cqlsh``.
