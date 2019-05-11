@@ -136,5 +136,21 @@ Dari masing masing node telah tersinkronisasi dengan baik tanpa adanya error, da
 ## 3. CRUD
 
 ## 4. Fail Over
+Pada kali ini akan mencoba mematikan node pada master dengan cara :
+```
+kill -9 <process id>
+atau
+redis-cli -p 6379 DEBUG sleep 30
+atau
+redis-cli -p 6379 DEBUG SEGFAULT
+```
+
+![](/tugas_5_redis/screenshoot/redis_failover_master_off.PNG)
+
+Maka pada master akan berhasil dimatikan, dan salah satu node slave akan menjadi masternya ketika failover dilakukan :
+
+![](/tugas_5_redis/screenshoot/redis_failover_slave.PNG)
+
+Pada kasus ini slave2 menjadi master setelah failover, sehingga redis tetap berjalan walaupun master mati karna master lainnya telah tergantikan oleh slave yang ada.
 
 ## 5. Referensi
