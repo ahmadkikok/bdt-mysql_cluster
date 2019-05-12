@@ -6,7 +6,7 @@ Tugas Implementasi Redis dengan menggunakan 1 Master dan 2 Slave.
 2. [Instalasi](#2-instalasi)
 	- [Install Kebutuhan](#21-install-kebutuhan)
 	- [Konfigurasi](#22-konfigurasi)
-3. [CRUD](#3-crud)
+3. [Test Redis](#3-test-redis)
 4. [Fail Over](#4-fail-over)
 5. [Referensi](#5-referensi)
 
@@ -133,10 +133,15 @@ Dari masing masing node telah tersinkronisasi dengan baik tanpa adanya error, da
 
 ![](/tugas_5_redis/screenshoot/redis_info_replication.PNG)
 
-## 3. CRUD
+## 3. Test Redis
+Pada kasus ini master melakukan set demokey dengan isi "Test Redis" yang kemudian di get oleh masing-masing slave, dan slave berhasil melakukan get dari key yang telah di set oleh master :
+
+![](/tugas_5_redis/screenshoot/redis_test.PNG)
+
+Redis telah berhasil melakukan replikasi kemasing masing slave.
 
 ## 4. Fail Over
-Pada kali ini akan mencoba mematikan node pada master dengan cara :
+Pada kali ini akan mencoba mematikan redis pada master dengan cara :
 ```
 kill -9 <process id>
 atau
@@ -154,3 +159,4 @@ Maka pada master akan berhasil dimatikan, dan salah satu node slave akan menjadi
 Pada kasus ini slave2 menjadi master setelah failover, sehingga redis tetap berjalan walaupun master mati karna master lainnya telah tergantikan oleh slave yang ada.
 
 ## 5. Referensi
+https://medium.com/@amila922/redis-sentinel-high-availability-everything-you-need-to-know-from-dev-to-prod-complete-guide-deb198e70ea6
