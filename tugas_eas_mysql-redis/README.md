@@ -1,4 +1,5 @@
-# Evaluasi Tengah Semester Wordpress dengan Menggunakan MySQL Cluster dan Redis
+# EAS - Wordpress dengan Menggunakan MySQL Cluster dan Redis
+Dokumentasi ini dibuat untuk mempermudah proses demo Evaluasi Akhir Semester perkuliahan Basis Data Terdistribusi.
 
 ## Menu Cepat
 1. [Model Arsitektur](#1-model-arsitektur)
@@ -82,8 +83,8 @@ Gambar diatas adalah ketika semua redis ditiap node saya matikan, maka status pl
 
 ## 6. Referensi
 https://wordpress.org/plugins/redis-cache/                                                                     
-https://www.cloudways.com/blog/install-redis-cache-wordpress/                                                       
-https://scalegrid.io/blog/using-redis-object-cache-to-speed-up-your-wordpress-installation/                                                                        
+https://www.cloudways.com/blog/install-redis-cache-wordpress/                                                    
+https://scalegrid.io/blog/using-redis-object-cache-to-speed-up-your-wordpress-installation/                     
+https://www.alibabacloud.com/blog/wordpress-performance-benchmarking-%26-installing-redis-object-caching_327910   
+https://www.digitalocean.com/community/questions/why-i-can-t-install-a-new-plugin-on-my-wordpress             
 https://www.digitalocean.com/community/tutorials/how-to-configure-redis-caching-to-speed-up-wordpress-on-ubuntu-14-04
-https://www.alibabacloud.com/blog/wordpress-performance-benchmarking-%26-installing-redis-object-caching_327910     
-https://www.digitalocean.com/community/questions/why-i-can-t-install-a-new-plugin-on-my-wordpress         
