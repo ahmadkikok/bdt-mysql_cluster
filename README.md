@@ -14,4 +14,4 @@ Github ini digunakan sebagai dokumentasi penugasan Basis Data Terdistribusi :
 	- [Cassandra Single Note](https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_4_cassandara-single-and-multiple-note/tugas_single-note)
 	- [Cassandra Multi Note](https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_4_cassandara-single-and-multiple-note/tugas_multi-note)
 7. [Tugas 5 - Redis](https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_5_redis)
-8. [Ujian Akhir Semester - Implementasi SQL dan NOSQL](https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_eas_mysql-redis)
+8. [Evaluasi Akhir Semester - Implementasi SQL dan NOSQL](https://github.com/ahmadkikok/bdt_2019/tree/master/tugas_eas_mysql-redis)
