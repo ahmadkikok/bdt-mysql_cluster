@@ -1,6 +1,8 @@
 # Wordpress Menggunakan MySQL Cluster dan Redis
 Dokumentasi ini dibuat untuk mempermudah proses demo Evaluasi Akhir Semester perkuliahan Basis Data Terdistribusi, Implementasi MySQL Cluster dan NOSQL Redis, Dengan menggunakan 4 node, dimana masing masing node diberikan RAM sebesar 1 GB, untuk referensi yang digunakan adalah referensi yang didapat dari google serta dokumentasi yang telah dilakukan sebelumnya.
 
+Cerita Untuk Dunia adalah Website Khusus yang dibuat oleh pembuat yang dikhususkan untuk sang pembuat menuliskan sebuah cerita atau pengalaman yang dibagikannya untuk dunia sama halnya seperti blog pribadi milik penulis.
+
 ## Menu Cepat
 1. [Model Arsitektur](#1-model-arsitektur)
 2. [Instalasi Wordpress](#2-instalasi-wordpress)
